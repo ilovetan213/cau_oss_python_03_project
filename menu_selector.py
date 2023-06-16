@@ -23,27 +23,23 @@ def start_process(path):
             select = int(input('type:'))
             if select == 1:
                 keyword = input('type name:')
-                print("not implemented yet")
-                # fill this block
+                spots = parking_spot_manager.filter_by_name(spots, keyword)   #구현한 함수 사용
             elif select == 2:
                 keyword = input('type city:')
-                print("not implemented yet")
-                # fill this block
+                spots = parking_spot_manager.filter_by_city(spots, keyword)   #구현한 함수 사용
             elif select == 3:
                 keyword = input('type district:')
-                print("not implemented yet")
-                # fill this block
+                spots = parking_spot_manager.filter_by_district(spots, keyword)   #구현한 함수 사용
             elif select == 4:
                 keyword = input('type ptype:')
-                print("not implemented yet")
-                # fill this block
+                spots = parking_spot_manager.filter_by_ptype(spots, keyword)   #구현한 함수 사용
             elif select == 5:
-                min_lat = float(input('type min lat:'))
-                max_lat = float(input('type max lat:'))
-                min_lon = float(input('type min long:'))
-                max_lon = float(input('type max long:'))
-                print("not implemented yet")
-                # fill this block
+                min_lat = float(input('type min lat:'))             
+                max_lat = float(input('type max lat:'))             #구하고자 하는 위도 경도 범위를 입력 받은 후
+                min_long = float(input('type min long:'))           #filter_by_location 함수에 정보를 제공함으로써 데이터의 범위를 설정하고 불러옴
+                max_long = float(input('type max long:'))           #튜플 제작 과정에서 https://wikidocs.net/15 참조
+                location = (min_lat, max_lat, min_long, max_long)
+                spots = parking_spot_manager.filter_by_location(spots, location)  
             else:
                 print("invalid input")
         elif select == 3:

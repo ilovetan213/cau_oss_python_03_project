@@ -14,7 +14,7 @@ class parking_spot:
 
     def get(self, keyword=''):
         return self.__item.get(keyword, None)   #keyword에 해당하는 값을 반환하고, 그렇지 않으면 None을 반환
-                                                #구글 파이썬 get 메소드 매개변수 keyword 검색 후 각종 블로그, 사이트 참조
+                                                #구글 파이썬 get 메소드 매개변수 keyword 검색 후 위에서부터 십수개의 블로그, 사이트 등 참조
                                                 #Chat GPT 참조
         
         
@@ -46,19 +46,44 @@ def print_spots(spots):
     for spot in spots:                                     #https://blockdmask.tistory.com/424 참고 후 ---print elements(477)---로 출력 되도록 수정
         print(spot)
 
+#프로젝트 3 함수 구현 참고 문헌 https://sf2020.tistory.com/191
+#https://butter-shower.tistory.com/205
+#https://likethefirst.tistory.com/entry/Python-%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%95%A8%EC%B6%95-List-Comprehension
+#https://leedakyeong.tistory.com/entry/python-for%EB%AC%B8-if%EB%AC%B8-%ED%95%9C-%EC%A4%84%EB%A1%9C-%EC%BD%94%EB%94%A9%ED%95%98%EA%B8%B0
+#https://www.zinnunkebi.com/python-in-notin-op/
+
+def filter_by_name(spots, name):
+    return [spot for spot in spots if name in spot.get('name')]           
+
+def filter_by_city(spots, city):
+    return [spot for spot in spots if city in spot.get('city')]
+
+
+def filter_by_district(spots, district):
+    return [spot for spot in spots if district in spot.get('district')]
+
+
+def filter_by_ptype(spots, ptype):
+    return [spot for spot in spots if ptype in spot.get('ptype')]
+
+                                            #location 튜플 생성 과정에서 filter_by_location 함수 내에서 생성 후 구현하려 헀지만
+                                            #각 변수들을 읽지 못하는 문제가 발생 --> location을 밖으로 빼네어 구현하려 했지만,
+                                            #min_lat <= spot.get('latitude') <= max_lat and min_lon <= spot.get('longitude') <= max_lon
+def filter_by_location(spots, location):    #구현 시 정보를 못 받음 --> 조언을 통해 location[i] 형식으로 만들면 해결됨을 이해하고 이로 수정함
+    return [spot for spot in spots if location[0] <= spot.get('latitude') <= location[1] and location[2] <= spot.get('longitude') <= location[3]]
 
 # 각 단계별로 테스트 (테스트할때 주석해제 후 사용)
 if __name__ == '__main__':
     print("Testing the module...")
     # version#2
     import file_manager
-    str_list = file_manager.read_file("./input/free_parking_spot_seoul.csv")   #read_file 오타 수정
-    spots = str_list_to_class_list(str_list)
-    print_spots(spots)
+    str_list = file_manager.read_file("./input/free_parking_spot.csv")   #read_file 오타 수정
+    spots = str_list_to_class_list(str_list)                             #test 실행을 위해 ./input/free_parking_spot_seoul.csv --> ./input/free_parking_spot.csv 로 변경
+    # print_spots(spots)
 
     # version#3
-    # spots = filter_by_district(spots, '동작')
-    # print_spots(spots)
+    spots = filter_by_city(spots, '인천')   #다른 예제들도 정상적으로 작동하는지 실험 확인하기 위해 filter_by_~~~(spots, '~~') 여러가지 실행
+    print_spots(spots)
     
     # version#4
     # spots = sort_by_keyword(spots, 'name')
