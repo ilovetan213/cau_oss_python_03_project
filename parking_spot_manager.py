@@ -72,19 +72,23 @@ def filter_by_ptype(spots, ptype):
 def filter_by_location(spots, location):    #구현 시 정보를 못 받음 --> 조언을 통해 location[i] 형식으로 만들면 해결됨을 이해하고 이로 수정함
     return [spot for spot in spots if location[0] <= spot.get('latitude') <= location[1] and location[2] <= spot.get('longitude') <= location[3]]
 
+
+def sort_by_keyword(spots, keyword):        #https://sennieworld.tistory.com/46 블로그 참조 후 해당 함수 작성
+    return sorted(spots, key=lambda spot: spot.get(keyword))
+
 # 각 단계별로 테스트 (테스트할때 주석해제 후 사용)
 if __name__ == '__main__':
     print("Testing the module...")
     # version#2
     import file_manager
-    str_list = file_manager.read_file("./input/free_parking_spot.csv")   #read_file 오타 수정
-    spots = str_list_to_class_list(str_list)                             #test 실행을 위해 ./input/free_parking_spot_seoul.csv --> ./input/free_parking_spot.csv 로 변경
-    # print_spots(spots)
+    str_list = file_manager.read_file("./input/free_parking_spot_seoul.csv")   #read_file 오타 수정
+    spots = str_list_to_class_list(str_list)                           #test 실행을 위해 ./input/free_parking_spot_seoul.csv --> ./input/free_parking_spot.csv 로 변경
+    # print_spots(spots)                                               #version#4 test를 위해 다시 ./input/free_parking_spot_seoul.csv로 복구
 
     # version#3
-    spots = filter_by_city(spots, '인천')   #다른 예제들도 정상적으로 작동하는지 실험 확인하기 위해 filter_by_~~~(spots, '~~') 여러가지 실행
-    print_spots(spots)
+    # spots = filter_by_city(spots, '인천')   #다른 예제들도 정상적으로 작동하는지 실험 확인하기 위해 filter_by_~~~(spots, '~~') 여러가지 실행
+    # print_spots(spots)
     
     # version#4
-    # spots = sort_by_keyword(spots, 'name')
-    # print_spots(spots)
+    spots = sort_by_keyword(spots, 'ptype')   #version#4도 마찬가지로 다른 예제들의 정상작동을 확인하기 위해
+    print_spots(spots)                        #spots = sort_by_keyword(spots, '~~~')를 바꿔가며 실행

@@ -12,7 +12,7 @@ def start_process(path):
         print("[4] exit")
         select = int(input('type:'))
         if select == 1:   #parking_spot_manager모듈의 print_spots함수를 호출
-            parking_spot_manager.print_spots(spots)
+            parking_spot_manager.print_spots(spots)   #1을 선택할 시에만 print 진행
         elif select == 2:
             print("---filter by---")
             print("[1] name")
@@ -48,8 +48,7 @@ def start_process(path):
             print(keywords)
             keyword = input('type keyword:')
             if keyword in keywords:
-                print("not implemented yet")
-                # fill this block
+                spots = parking_spot_manager.sort_by_keyword(spots, keyword)   #spots sorted 실행
             else: print("invalid input")
         elif select == 4:
             print("Exit")   #menu에서 4번 선택시 Exit을 출력하고 break을 통해 반복을 종료함
